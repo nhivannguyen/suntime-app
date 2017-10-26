@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@+id/button" />
+        <TableLayout
+            android:id="@+id/TableLayout01"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="0,1"
+            android:gravity="center"
+            android:padding="5sp"
+            android:layout_marginTop="16dp"
+            android:layout_below="@+id/button"
+            android:layout_alignParentEnd="true">
+
+            <TableRow
+                android:id="@+id/TableRow01"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignStart="@+id/sunriseTimeTV"
+                android:layout_alignTop="@+id/textView">
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="2sp"
+                    android:text="Sun Rise"
+                    android:textColor="#ffd700"
+                    android:textSize="24sp"></TextView>
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/sunsetTimeTV"
+                    android:layout_alignStart="@+id/sunsetTimeTV"
+                    android:layout_marginBottom="12dp"
+                    android:layout_marginStart="18dp"
+                    android:gravity="center"
+                    android:padding="2sp"
+                    android:text="Sun Set"
+                    android:textColor="#ff8400"
+                    android:textSize="24sp"></TextView>
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/TableRow02"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/sunriseTimeTV"
+                    android:layout_width="match_parent"
+                    android:layout_above="@+id/ImageView01"
+                    android:layout_alignStart="@+id/datePicker"
+                    android:layout_marginStart="29dp"
+                    android:gravity="center"
+                    android:padding="2sp"
+                    android:text="00:00"
+                    android:textAlignment="center"
+                    android:textColor="#ffd700"
+                    android:textSize="48sp"></TextView>
+
+                <TextView
+                    android:id="@+id/sunsetTimeTV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/sunriseTimeTV"
+                    android:layout_alignEnd="@+id/datePicker"
+                    android:layout_marginEnd="27dp"
+                    android:gravity="center"
+                    android:padding="2sp"
+                    android:text="00:00"
+                    android:textAlignment="textEnd"
+                    android:textColor="#ff8400"
+                    android:textSize="48sp"></TextView>
+
+            </TableRow>
+        </TableLayout>
+
+        <ImageView
+            android:id="@+id/ImageView01"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:src="@drawable/sunpic"
+            android:layout_below="@+id/TableLayout01"
+            android:layout_alignParentStart="true"></ImageView>
+
+        <DatePicker
+            android:id="@+id/datePicker"
+            style="@android:style/Widget.DatePicker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="5dp"
+            android:gravity="center"
+            android:layout_below="@+id/ImageView01"
+            android:layout_alignEnd="@+id/button"></DatePicker>
+
+        <ImageButton
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/spinner"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="2dp"
+            android:elevation="0dp"
+            android:onClick="toSelect"
+            android:textAllCaps="true"
+            app:srcCompat="@android:drawable/ic_menu_mylocation" />
+
+
+    </RelativeLayout>
+</ScrollView>
