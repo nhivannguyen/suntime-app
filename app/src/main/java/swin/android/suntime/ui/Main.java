@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import swin.android.suntime.R;
 
@@ -38,7 +39,6 @@ public class Main extends AppCompatActivity
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container, new AddFragment()).commit();
                 return true;
             case R.id.share:
-                // something something
                 return true;
             case R.id.exit:
                 // exit the app

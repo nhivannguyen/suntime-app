@@ -101,7 +101,7 @@
         android:layout_alignStart="@+id/tzName" />
 
     <Button
-        android:id="@+id/submit"
+        android:id="@+id/submitButton"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tzText"

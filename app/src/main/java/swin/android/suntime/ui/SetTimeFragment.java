@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -56,7 +57,8 @@ public class SetTimeFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, Bundle bundle){
+    public void onViewCreated(final View view, Bundle bundle){
+        ImageButton getLocation = (ImageButton) view.findViewById(R.id.getLocation);
         loc_spin = (Spinner) view.findViewById(R.id.spinner);
         LoadCSV();
         initializeUI();
@@ -76,6 +78,12 @@ public class SetTimeFragment extends Fragment {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
+            }
+        });
+        getLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    getFragmentManager().beginTransaction().replace(R.id.fragment_container, new MapFragment()).commit();
             }
         });
     }

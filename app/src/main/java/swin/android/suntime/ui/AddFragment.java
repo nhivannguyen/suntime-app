@@ -32,11 +32,11 @@ public class AddFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, Bundle bundle){
-        Button submitButton = (Button) view.findViewById(R.id.submit);
+    public void onViewCreated(final View view, Bundle bundle){
+        Button submitButton = (Button) view.findViewById(R.id.submitButton);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 // get data
                 EditText locText = (EditText) view.findViewById(R.id.locText);
                 String locStr = locText.getText().toString();
