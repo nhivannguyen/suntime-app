@@ -1,10 +1,15 @@
 package swin.android.suntime.ui;
 
+import android.app.Fragment;
 import android.content.Context;
+import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -35,14 +40,26 @@ import swin.android.suntime.calc.GeoLocation;
  * Created by vnhip on 26-Oct-17.
  */
 
-public class SetTimeFragment {
+public class SetTimeFragment extends Fragment {
     private static final String FILENAME = "data.txt";
     private Spinner loc_spin;
     private LinkedHashMap<String, List<String>> list;
     private Map.Entry<String, List<String>> place;
     private Integer[] date;
 
-    public SetTimeFragment(){
+    public SetTimeFragment(){}
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.set_time_fragment, container, false);
+    }
+
+    @Override
+    public void onViewCreated(final View view, Bundle bundle){
+        ImageButton getLocation = (ImageButton) view.findViewById(R.id.getLocation);
+        loc_spin = (Spinner) view.findViewById(R.id.spinner);
         LoadCSV();
         initializeUI();
         loc_spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -62,18 +79,23 @@ public class SetTimeFragment {
             public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
+        });
+        getLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    getFragmentManager().beginTransaction().replace(R.id.fragment_container, new MapFragment()).commit();
+            }
+        });
     }
 
     private void LoadCSV(){
         list = new LinkedHashMap<>();
-        loc_spin = (Spinner) findViewById(R.id.spinner);
         date = new Integer[3];
 
-
-        File f = new File(getApplicationContext().getFilesDir(), FILENAME);
+        File f = new File(getActivity().getApplicationContext().getFilesDir(), FILENAME);
         if (!f.exists()){
             try {
-                FileOutputStream file = openFileOutput(FILENAME, Context.MODE_PRIVATE); // TODO: is this being called everytime?
+                FileOutputStream file = getActivity().openFileOutput(FILENAME, Context.MODE_PRIVATE); // TODO: is this being called everytime?
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -83,11 +105,11 @@ public class SetTimeFragment {
         String toFile = streamToString(raw);
 
         try {
-            InputStream in = openFileInput(FILENAME);
+            InputStream in = getActivity().openFileInput(FILENAME);
             String textInData = streamToString(in);
             if (textInData.length() < toFile.length()) {
                 try {
-                    OutputStreamWriter writer = new OutputStreamWriter(openFileOutput(FILENAME, Context.MODE_PRIVATE));
+                    OutputStreamWriter writer = new OutputStreamWriter(getActivity().openFileOutput(FILENAME, Context.MODE_PRIVATE));
                     writer.write(toFile);
                     writer.close();
                 } catch (FileNotFoundException e) {
@@ -105,7 +127,7 @@ public class SetTimeFragment {
 
         String str = "";
         try {
-            FileInputStream stream = openFileInput(FILENAME);
+            FileInputStream stream = getActivity().openFileInput(FILENAME);
             str = streamToString(stream);
             stream.close();
         }catch(FileNotFoundException e){
@@ -125,7 +147,7 @@ public class SetTimeFragment {
                 data.add(values[i]);
             }
             list.put(values[0], data);
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, new ArrayList<>(list.keySet()));
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, new ArrayList<>(list.keySet()));
             loc_spin.setAdapter(adapter);
         }
         place = list.entrySet().iterator().next();
@@ -134,7 +156,7 @@ public class SetTimeFragment {
 
     private void initializeUI()
     {
-        DatePicker dp = (DatePicker) findViewById(R.id.datePicker);
+        DatePicker dp = (DatePicker) getActivity().findViewById(R.id.datePicker);
         Calendar cal = Calendar.getInstance();
         date[0] = cal.get(Calendar.YEAR);
         date[1] = cal.get(Calendar.MONTH);
@@ -153,8 +175,8 @@ public class SetTimeFragment {
 
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 
-        TextView sunriseTV = getActivity().findViewById(R.id.sunriseTimeTV);
-        TextView sunsetTV = (TextView) findViewById(R.id.sunsetTimeTV);
+        TextView sunriseTV = (TextView) getActivity().findViewById(R.id.sunriseTimeTV);
+        TextView sunsetTV = (TextView) getActivity().findViewById(R.id.sunsetTimeTV);
 
         sunriseTV.setText(sdf.format(srise));
         sunsetTV.setText(sdf.format(sset));
