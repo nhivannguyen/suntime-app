@@ -1,5 +1,6 @@
 package swin.android.suntime.ui;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
@@ -46,8 +47,14 @@ public class SetTimeFragment extends Fragment {
     private LinkedHashMap<String, List<String>> list;
     private Map.Entry<String, List<String>> place;
     private Integer[] date;
+    dataPass dataAccess;
 
-    public SetTimeFragment(){}
+    public SetTimeFragment() {
+    }
+
+    public interface dataPass {
+        void shareData(Map.Entry<String, List<String>> place, String s);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,7 +64,7 @@ public class SetTimeFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(final View view, Bundle bundle){
+    public void onViewCreated(final View view, Bundle bundle) {
         ImageButton getLocation = (ImageButton) view.findViewById(R.id.getLocation);
         loc_spin = (Spinner) view.findViewById(R.id.spinner);
         LoadCSV();
@@ -80,12 +87,34 @@ public class SetTimeFragment extends Fragment {
 
             }
         });
+        // go to map fragment
         getLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    getFragmentManager().beginTransaction().replace(R.id.fragment_container, new MapFragment()).commit();
+                getFragmentManager().beginTransaction().add(R.id.map_container, new MapsFragment(), "Gmap").commit();
             }
         });
+
+        getLocation.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Fragment fDelete = getFragmentManager().findFragmentByTag("Gmap");
+                getFragmentManager().beginTransaction().remove(fDelete).commit();
+                return false;
+            }
+        });
+    }
+
+    @Override
+    public void onAttach(Context context){
+        super.onAttach(context);
+        Activity activity = (Activity) context;
+        try {
+            dataAccess = (dataPass) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement dataPass");
+        }
     }
 
     private void LoadCSV(){
@@ -95,7 +124,7 @@ public class SetTimeFragment extends Fragment {
         File f = new File(getActivity().getApplicationContext().getFilesDir(), FILENAME);
         if (!f.exists()){
             try {
-                FileOutputStream file = getActivity().openFileOutput(FILENAME, Context.MODE_PRIVATE); // TODO: is this being called everytime?
+                FileOutputStream file = getActivity().openFileOutput(FILENAME, Context.MODE_PRIVATE); // make file if it doesn't exist
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -180,6 +209,13 @@ public class SetTimeFragment extends Fragment {
 
         sunriseTV.setText(sdf.format(srise));
         sunsetTV.setText(sdf.format(sset));
+
+        dataAccess.shareData(place,
+                "At " + place.getKey()
+                        + ",\nsun rises at: "
+                        + sdf.format(srise)
+                        + "\nsun sets at: "
+                        + sdf.format(sset));
     }
 
     DatePicker.OnDateChangedListener dateChangeHandler = new DatePicker.OnDateChangedListener()

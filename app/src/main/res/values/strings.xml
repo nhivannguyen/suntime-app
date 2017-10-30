@@ -1,9 +1,17 @@
 <resources>
-    <string name="app_name">Suntime</string>
+    <string name="app_name">Suntory time</string>
     <string name="add">Add a new location</string>
     <string name="exit">Exit</string>
     <string name="share">Share</string>
+    <string name="dates_select">Get times from date range</string>
+    <string name="dates_select_button">Get date range</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_maps">Map</string>
+
+    <string name="title_location_permission">Location Detect</string>
+    <string name="text_location_permission">Can I get your location please?</string>
+    <string name="ok">Thank you!</string>
+
 </resources>
