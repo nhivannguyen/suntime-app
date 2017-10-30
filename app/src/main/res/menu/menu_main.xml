@@ -16,6 +16,12 @@
         android:title="@string/add">
     </item>
     <item
+        android:id="@+id/dates_select"
+        android:icon="@android:drawable/ic_dialog_info"
+        app:showAsAction="never"
+        android:title="@string/dates_select">
+    </item>
+    <item
         android:id="@+id/exit"
         app:showAsAction="never"
         android:title="@string/exit">
